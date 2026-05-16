@@ -12,10 +12,13 @@ import ShopMain from './Views/Shop/ShopMain'
 import PublicLayout from './Views/layout'
 import LoginPage from './Views/Admin/LoginPage'
 import AdminMain from './Views/Admin/AdminMain'
-import AdminDashboard from './Views/Admin/admin_dashboard'
+import AdminDashboard from './Views/Admin/Admin_dashboard'
 import Settings from './Views/Admin/Settings/Settings'
-import AdminLayout from './Views/Admin/admin_layout'
+import AdminLayout from './Views/Admin/Admin_layout'
 import Add_products from './Views/Admin/Services/Add_products'
+import AddShopProducts from './Views/Admin/Shop/addShopProducts'
+import AdminContact from './Views/Admin/Contacts/AdminContact'
+import Order from './Views/Admin/Order/Order'
 
 
 
@@ -49,10 +52,11 @@ function App() {
         </AdminRoute>}>
 
         <Route index path={RouteServices.adminDashboard} element={<AdminDashboard />}></Route>
-        <Route path={RouteServices.settings} element={<Settings />}>
-        
-        </Route>
+        <Route path={RouteServices.settings} element={<Settings />}></Route>
         <Route path={RouteServices.adminServies} element={<Add_products />}></Route>
+        <Route path={RouteServices.adminShop} element={<AddShopProducts/>} ></Route>
+        <Route path={RouteServices.order} element={<Order/> } ></Route>
+        <Route path={RouteServices.adminContact} element={<AdminContact/> } ></Route>
 
         </Route>
         

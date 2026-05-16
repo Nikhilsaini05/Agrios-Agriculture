@@ -11,8 +11,11 @@ export function UserLoginData({children}){
     const saveUserProfile = (profile)=> {
         if(!profile) return;
 
+
         setUser(profile);
     }
+
+    
 
     // const isUserAvialable = ()=> {
     //     if(user){

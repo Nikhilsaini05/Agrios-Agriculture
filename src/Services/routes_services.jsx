@@ -12,10 +12,13 @@ export const RouteServices = {
     news: "/news-grid",
     shop: "/shop",
     contact: "/contact",
-    admin: "/Admin",
+    admin: "/admin",
     adminDashboard: "/dashboard",
     settings: "settings",
-    adminServies: "adminServices"
+    adminServies: "adminServices",
+    adminShop: "adminShop",
+    order: "order",
+    adminContact: "adminContact"
 }
 
 

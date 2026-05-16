@@ -49,19 +49,22 @@ export default function Sidebar() {
                                 <HandPlatter size={22} /> <span>Services</span>
                             </li>
 
-                            {/* Project */}
-                            <li className={getNavStyle('/project')}>
-                                <PackageSearch size={22} /> <span className='opacity-10'>Project</span>
+                            {/* Order */}
+                            <li className={getNavStyle(RouteServices.order)}
+                                onClick={()=> navigate(RouteServices.order)}>
+                                <PackageSearch size={22} /> <span>Order</span>
                             </li>
 
                             {/* Shop */}
-                            <li className={getNavStyle('/shop')}>
-                                <ShoppingCart size={22} /> <span className='opacity-10'>Shop</span>
+                            <li className={getNavStyle(RouteServices.adminShop)}
+                                onClick={()=> navigate(RouteServices.adminShop)}>
+                                <ShoppingCart size={22} /> <span >Shop</span>
                             </li>
 
                             {/* Contact */}
-                            <li className={getNavStyle('/contact')}>
-                                <SquareUserRound size={22} /> <span className='opacity-10'>Contact</span>
+                            <li className={getNavStyle(RouteServices.adminContact)}
+                                onClick={()=> navigate(RouteServices.adminContact)}>
+                                <SquareUserRound size={22} /> <span >Contact</span>
                             </li>
 
                             {/* Customers */}
