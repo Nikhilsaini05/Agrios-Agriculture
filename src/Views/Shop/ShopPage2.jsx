@@ -1,8 +1,5 @@
 import React from 'react';
 import { Search, ChevronRight, Star } from 'lucide-react'; 
-import ShopPage2 from './ShopPage2';
-import { RouteServices } from '../../Services/routes_services';
-import { useNavigate } from 'react-router';
 
 const products = [
     { id: 1, name: 'Apples', price: 50.00, img: '/Images/Apples.jpg', rating: 5 },
@@ -16,8 +13,7 @@ const products = [
     { id: 9, name: 'Red Grapes', price: 100.00, img: '/Images/RedGrapes.jpg', rating: 5 },
 ];
 
-export default function ShopHome() {
-        const navigate = useNavigate();    
+export default function ShopPage2() {
     return (
         <section className="w-full bg-white py-10 px-4 md:px-10">
             <main className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
@@ -94,14 +90,8 @@ export default function ShopHome() {
 
                     {/* Pagination */}
                     <div className="flex justify-center items-center mt-12 gap-2">
-                        <button 
-                        className="w-10 h-10 bg-[#56b35a] text-white rounded-md cursor-pointer font-bold">
-                            1
-                        </button>
-                        <button onClick={() => navigate(RouteServices.shoppage2)}
-                        className="w-10 h-10 border border-gray-200 text-gray-500 rounded-md cursor-pointer hover:bg-gray-50">
-                            2
-                        </button >
+                        <button className="w-10 h-10 bg-[#56b35a] text-white rounded-md font-bold">1</button>
+                        <button className="w-10 h-10 border border-gray-200 text-gray-500 rounded-md hover:bg-gray-50">2</button>
                         <button className="w-10 h-10 border border-gray-200 text-gray-500 rounded-md hover:bg-gray-50 flex items-center justify-center">
                             <ChevronRight size={18} />
                         </button>

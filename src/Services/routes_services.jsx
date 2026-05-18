@@ -11,6 +11,7 @@ export const RouteServices = {
     projectDetails: "/project-details",
     news: "/news-grid",
     shop: "/shop",
+    shoppage2: "/shoppage2",
     contact: "/contact",
     admin: "/admin",
     adminDashboard: "/dashboard",
