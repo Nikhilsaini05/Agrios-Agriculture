@@ -4,10 +4,14 @@ export default function Order() {
 
     // Mock data for the table rows
     const orders = [
-        { id: "#AG-9482", customer: "Rohit", date: "May 16, 2026 09:05 AM", items: "3 Items", payment: "Paid", status: "Processing" },
+        { id: "#AG-9481", customer: "Rohan", date: "May 16, 2026 09:05 AM", items: "3 Items", payment: "Paid", status: "Processing" },
+        { id: "#AG-9482", customer: "Rohit", date: "May 16, 2026 09:05 AM", items: "2 Items", payment: "Paid", status: "Processing" },
         { id: "#AG-9483", customer: "Ajay", date: "May 16, 2026 09:05 AM", items: "1 Item", payment: "Pending", status: "Shipped" },
         { id: "#AG-9484", customer: "Vijay", date: "May 16, 2026 09:05 AM", items: "3 Items", payment: "Paid", status: "Delivered" },
         { id: "#AG-9485", customer: "Bunty", date: "May 16, 2026 09:05 AM", items: "1 Item", payment: "Paid", status: "Shipped" },
+        { id: "#AG-9486", customer: "Raju", date: "May 16, 2026 09:05 AM", items: "1 Item", payment: "Pending", status: "Shipped" },
+        { id: "#AG-9487", customer: "Sunil", date: "May 16, 2026 09:05 AM", items: "2 Item", payment: "Paid", status: "Delivered" },
+        { id: "#AG-9488", customer: "Karan", date: "May 16, 2026 09:05 AM", items: "1 Item", payment: "Paid", status: "Shipped" },
     ];
 
     return (
@@ -19,14 +23,14 @@ export default function Order() {
                     <p className="text-gray-500 text-sm tracking-tight">All Current Order Details are Show Below</p>
                 </div>
                 <div className="flex gap-3">
-                    <button
+                    {/* <button
                         className="px-6 py-2 border border-[#5F0D24] text-[#5F0D24] rounded-full font-medium cursor-pointer shadow-md active:scale-95 transition-all">
                         Reject
                     </button>
                     <button
                         className="px-6 py-2 bg-[#5F0D24] text-white rounded-full font-medium cursor-pointer shadow-md active:scale-95 transition-all">
                         Accept All
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
