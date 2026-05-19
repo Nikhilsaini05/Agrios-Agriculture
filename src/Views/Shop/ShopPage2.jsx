@@ -13,6 +13,7 @@ const products = [
     { id: 8, name: 'Pumpkin', price: 35.00, img: '/Images/Pumpkin.png', rating: 5, description: 'Hearty, robust autumn pumpkins excellent for roasting, soups, or baking.' },
     { id: 9, name: 'Cabbage', price: 10.00, img: '/Images/Cabbage.png', rating: 5, description: 'Crisp green cabbage heads packed clean with essential minerals and fiber.' },
 ];
+
 export default function ShopPage2({ activePage, setActivePage }) {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -138,95 +139,116 @@ export default function ShopPage2({ activePage, setActivePage }) {
 
             </main>
 
-            {/* Cart PopUp */}
+            {/* --- DETAILS POPUP MODAL --- */}
             {selectedProduct && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                                <div className="absolute inset-0" onClick={closePopup}></div>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4">
+                    {/* Backdrop closer click zone */}
+                    <div className="absolute inset-0" onClick={closePopup}></div>
+                    
+                    {/* Modal Window Container */}
+                    <div className="bg-white rounded-2xl max-w-2xl w-full  mt-30 py-12 px-4 md:p-4 relative z-10 shadow-2xl flex flex-col md:flex-row gap-4 max-h-[92vh] overflow-y-auto">
+                        
+                        {/* Close Button Trigger */}
+                        <button 
+                            type="button"
+                            onClick={closePopup}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1.5 rounded-full bg-white/80 backdrop-blur-sm md:bg-transparent hover:bg-gray-100 transition-colors z-20"
+                        >
+                            <X size={22} />
+                        </button>
+
+                        {/* Left Side: Product Image Display */}
+                        <div className="w-full md:w-1/2 aspect-square md:max-h-none max-h-55 bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
+                            <img 
+                                src={selectedProduct.img} 
+                                alt={selectedProduct.name} 
+                                className="max-h-full max-w-full object-contain mix-blend-multiply p-2"
+                            />
+                        </div>
+
+                        {/* Right Side: Product Details Content */}
+                        <div className="w-full md:w-1/2 flex flex-col justify-between text-left">
+                            <div> 
+                                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{selectedProduct.name}</h2>
                                 
-                                <div className="bg-white rounded-2xl max-w-2xl w-full mt-30 p-6 md:p-4 relative z-10 shadow-2xl flex flex-col md:flex-row gap-6 max-h-[90vh] overflow-y-auto">
-                                    
-                                    <button 
-                                        onClick={closePopup}
-                                        className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
-                                    >
-                                        <X size={24} />
-                                    </button>
-            
-                                    <div className="w-full md:w-1/2 aspect-square bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden">
-                                        <img 
-                                            src={selectedProduct.img} 
-                                            alt={selectedProduct.name} 
-                                            className="max-h-full max-w-full object-contain mix-blend-multiply"
-                                        />
-                                    </div>
-            
-                                    <div className="w-full md:w-1/2 flex text-left flex-col justify-between py-2">
-                                        <div> 
-                                            <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProduct.name}</h2>
-                                            
-            
-                                            <p className="text-2xl font-black text-[#56b35a] mb-2">${selectedProduct.price.toFixed(2)}</p>
-                                            <p className="text-gray-600 text-sm leading-relaxed mb-2">{selectedProduct.description}</p>
-                                        </div>
-                                            <div className="flex items-center justify-between gap-1 ">
-                                                <span className="text-sm text-gray-400 mr-30">(Reviews)</span>
-                                                {[...Array(selectedProduct.rating)].map((_, idx) => (
-                                                    <Star key={idx} size={18} className="fill-[#f2c050] text-[#f2c050]" />
-                                                ))}
-                                            </div>
-            
-                                        {/* Controls Wrapper */}
-                                        <div className="space-y-3 mt-4">
-                                            <div className="space-y-3 border-t border-b border-gray-100 py-3">
-                                                <div className="flex items-center justify-between">
-                                                    <span className="text-gray-700 font-bold text-sm">Quantity:</span>
-                                                    <div className="flex items-center border border-gray-200 rounded-md bg-white">
-                                                        <button 
-                                                            onClick={decreaseQty}
-                                                            className="p-2 text-gray-500 hover:text-red-500 transition-colors"
-                                                        >
-                                                            <Minus size={16} />
-                                                        </button>
-                                                        <span className="w-12 text-center font-bold text-gray-800">{quantity}</span>
-                                                        <button 
-                                                            onClick={increaseQty}
-                                                            className="p-2 text-gray-500 hover:text-[#56b35a] transition-colors"
-                                                        >
-                                                            <Plus size={16} />
-                                                        </button>
-                                                    </div>
-                                                </div>
-            
-                                                <div className="flex items-center justify-between">
-                                                    <span className="text-gray-700 font-bold text-sm">Total Price:</span>
-                                                    <span className="text-2xl font-black text-[#56b35a]">
-                                                        ${(selectedProduct.price * quantity).toFixed(2)}
-                                                    </span>
-                                                </div>
-                                            </div>
-            
-                                            <div className="flex flex-col sm:flex-row gap-6">
-                                                <button 
-                                                    onClick={() => alert(`Added ${quantity} ${selectedProduct.name} to cart!`)}
-                                                    className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-gray-50 py-2 px-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all"
-                                                >
-                                                    <ShoppingCart size={50} />
-                                                    Add To Cart
-                                                </button>
-            
-                                                <button 
-                                                    onClick={() => alert(`Proceeding to checkout for ${quantity} ${selectedProduct.name}!`)}
-                                                    className="flex-1 bg-[#56b35a] hover:bg-[#4aa04e] text-xl text-white py-2 px-4 rounded-lg font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
-                                                >
-                                                    Buy Now
-                                                </button>
-                                            </div>
-                                        </div>
-            
+                                <p className="text-xl md:text-2xl font-black text-[#56b35a] mb-2">
+                                    ${selectedProduct.price.toFixed(2)}
+                                </p>
+                                
+                                <p className="text-gray-600 text-[12px] md:text-sm leading-relaxed mb-2 md:mb-4">
+                                    {selectedProduct.description}
+                                </p>
+
+                                {/* Review Section row */}
+                                <div className="flex items-center justify-between gap-1 mb-2 md:mb-4 border-b border-gray-100 pb-2 md:pb-4">
+                                    <div className="flex gap-0.5">
+                                        <span className="text-[10px] md:text-xs text-gray-400 mr-26 md:mr-20">(Customer Reviews)</span>
+                                        {[...Array(selectedProduct.rating)].map((_, idx) => (
+                                            <Star key={idx} size={10} md:size={16} className="fill-[#f2c050] text-[#f2c050]" />
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-                        )}
+                            
+                            {/* Controls Action Box Layout */}
+                            <div className="space-y-2">
+                                <div className="space-y-2 bg-gray-50 p-2 rounded-xl">
+                                    {/* Toggler Row */}
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-gray-700 font-bold text-[12px] md:text-sm">Quantity:</span>
+                                        <div className="flex items-center border border-gray-200 rounded-lg bg-white overflow-hidden shadow-sm">
+                                            <button 
+                                                type="button"
+                                                onClick={decreaseQty}
+                                                className="p-2 text-gray-500 hover:text-red-500 hover:bg-gray-50 transition-colors"
+                                            >
+                                                <Minus size={14} />
+                                            </button>
+                                            <span className="w-10 text-center text-sm font-bold text-gray-800">{quantity}</span>
+                                            <button 
+                                                type="button"
+                                                onClick={increaseQty}
+                                                className="p-2 text-gray-500 hover:text-[#56b35a] hover:bg-gray-50 transition-colors"
+                                            >
+                                                <Plus size={14} />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Price Row */}
+                                    <div className="flex items-center justify-between border-t border-gray-200/60 pt-2">
+                                        <span className="text-gray-700 font-bold text-xs md:text-sm">Total Price:</span>
+                                        <span className="text-xl md:text-2xl font-black text-[#56b35a]">
+                                            ${(selectedProduct.price * quantity).toFixed(2)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Dynamic Action Button Set */}
+                                <div className="flex flex-row md:flex-col gap-2 md:gap-2.5">
+                                    <button 
+                                        type="button"
+                                        onClick={() => alert(`Added ${quantity} ${selectedProduct.name} to cart!`)}
+                                        className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                                    >
+                                        <ShoppingCart size={16} />
+                                        Add To Cart
+                                    </button>
+
+                                    <button 
+                                        type="button"
+                                        onClick={() => alert(`Proceeding to checkout for ${quantity} ${selectedProduct.name}!`)}
+                                        className="flex-1 bg-[#56b35a] hover:bg-[#4aa04e] text-white py-1.5 md:py-2.5 px-2 md:px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-sm hover:shadow transition-all active:scale-[0.98]"
+                                    >
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
