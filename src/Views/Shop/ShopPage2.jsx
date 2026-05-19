@@ -1,23 +1,36 @@
-import React from 'react';
-import { Search, ChevronRight, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, ChevronRight, Star, X, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { RouteServices } from '../../Services/routes_services';
 
 const products = [
-    { id: 1, name: 'Orange', price: 40.00, img: '../../../public/Images/Orange.png', rating: 5 },
-    { id: 2, name: 'Tomato', price: 20.00, img: '../../../public/Images/Tomato.png', rating: 5 },
-    { id: 3, name: 'Bitter Melon', price: 30.00, img: '../../../public/Images/Bittermelon.png', rating: 5 },
-    { id: 4, name: 'Cucumber', price: 45.00, img: '../../../public/Images/Cucumber.png', rating: 5 },
-    { id: 5, name: 'Watermelon', price: 25.00, img: '../../../public/Images/watermelon.png', rating: 5 },
-    { id: 6, name: 'Plum', price: 80.00, img: '../../../public/Images/Plum.png', rating: 5 },
-    { id: 7, name: 'Cherry', price: 100.00, img: '../../../public/Images/Cherry.png', rating: 5 },
-    { id: 8, name: 'Pumpkin', price: 35.00, img: '../../../public/Images/Pumpkin.png', rating: 5 },
-    { id: 9, name: 'Cabbage', price: 10.00, img: '../../../public/Images/Cabbage.png', rating: 5 },
+    { id: 1, name: 'Orange', price: 40.00, img: '/Images/Orange.png', rating: 5, description: 'Sweet, juicy citrus fruits bursting with Vitamin C and natural energy.' },
+    { id: 2, name: 'Tomato', price: 20.00, img: '/Images/Tomato.png', rating: 5, description: 'Plump, vine-ripened red tomatoes perfect for fresh salads and rich sauces.' },
+    { id: 3, name: 'Bitter Melon', price: 30.00, img: '/Images/Bittermelon.png', rating: 5, description: 'Nutrient-rich premium bitter melons harvested fresh for healthy lifestyles.' },
+    { id: 4, name: 'Cucumber', price: 45.00, img: '/Images/Cucumber.png', rating: 5, description: 'Cool and incredibly refreshing cucumbers with a perfect, crisp snap.' },
+    { id: 5, name: 'Watermelon', price: 25.00, img: '/Images/watermelon.png', rating: 5, description: 'Hydrating, seedless large sweet watermelons, the perfect summertime treat.' },
+    { id: 6, name: 'Plum', price: 80.00, img: '/Images/Plum.png', rating: 5, description: 'Deeply sweet, soft, and juicy purple plums picked at their absolute peak ripest.' },
+    { id: 7, name: 'Cherry', price: 100.00, img: '/Images/Cherry.png', rating: 5, description: 'Exquisite, hand-selected ruby red cherries loaded with sweet antioxidant goodness.' },
+    { id: 8, name: 'Pumpkin', price: 35.00, img: '/Images/Pumpkin.png', rating: 5, description: 'Hearty, robust autumn pumpkins excellent for roasting, soups, or baking.' },
+    { id: 9, name: 'Cabbage', price: 10.00, img: '/Images/Cabbage.png', rating: 5, description: 'Crisp green cabbage heads packed clean with essential minerals and fiber.' },
 ];
-
 export default function ShopPage2({ activePage, setActivePage }) {
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+
+    const openProductDetails = (product) => {
+        setSelectedProduct(product);
+        setQuantity(1); 
+    };
+
+    const closePopup = () => {
+        setSelectedProduct(null);
+    };
+
+    const increaseQty = () => setQuantity(prev => prev + 1);
+    const decreaseQty = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
     return (
-        <section className="w-full bg-white py-10 px-4 md:px-10">
+        <section className="w-full bg-white py-10 px-4 md:px-10 relative">
             <main className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
 
                 {/* --- SIDEBAR --- */}
@@ -28,7 +41,7 @@ export default function ShopPage2({ activePage, setActivePage }) {
                             <input
                                 type="text"
                                 placeholder="Search products..."
-                                className="w-full  p-3 bg-transparent border-none placeholder-white text-white focus:outline-none"
+                                className="w-full p-3 bg-transparent border-none placeholder-white text-white focus:outline-none"
                             />
                         </div>
                     </div>
@@ -71,7 +84,11 @@ export default function ShopPage2({ activePage, setActivePage }) {
                     {/* Product Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {products.map((item) => (
-                            <div key={item.id} className="group cursor-pointer">
+                            <div 
+                                key={item.id} 
+                                className="group cursor-pointer"
+                                onClick={() => openProductDetails(item)}
+                            >
                                 <div className="w-full aspect-square overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
                                     <img
                                         src={item.img}
@@ -94,16 +111,18 @@ export default function ShopPage2({ activePage, setActivePage }) {
                     <div className="flex justify-center items-center mt-12 gap-2">
                         <button
                             onClick={() => setActivePage(1)}
-                            className={`w-10 h-10 rounded-md cursor-pointer font-bold transition-colors ${activePage === 1 ? 'bg-[#56b35a] text-white' : 'border border-gray-200 text-gray-500 hover:bg-gray-50'
-                                }`}
+                            className={`w-10 h-10 rounded-md cursor-pointer font-bold transition-colors ${
+                                activePage === 1 ? 'bg-[#56b35a] text-white' : 'border border-gray-200 text-gray-500 hover:bg-gray-50'
+                            }`}
                         >
                             1
                         </button>
 
                         <button
                             onClick={() => setActivePage(2)}
-                            className={`w-10 h-10 rounded-md cursor-pointer font-bold transition-colors ${activePage === 2 ? 'bg-[#56b35a] text-white' : 'border border-gray-200 text-gray-500 hover:bg-gray-50'
-                                }`}
+                            className={`w-10 h-10 rounded-md cursor-pointer font-bold transition-colors ${
+                                activePage === 2 ? 'bg-[#56b35a] text-white' : 'border border-gray-200 text-gray-500 hover:bg-gray-50'
+                            }`}
                         >
                             2
                         </button>
@@ -118,6 +137,96 @@ export default function ShopPage2({ activePage, setActivePage }) {
                 </section>
 
             </main>
+
+            {/* Cart PopUp */}
+            {selectedProduct && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                                <div className="absolute inset-0" onClick={closePopup}></div>
+                                
+                                <div className="bg-white rounded-2xl max-w-2xl w-full mt-30 p-6 md:p-4 relative z-10 shadow-2xl flex flex-col md:flex-row gap-6 max-h-[90vh] overflow-y-auto">
+                                    
+                                    <button 
+                                        onClick={closePopup}
+                                        className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                                    >
+                                        <X size={24} />
+                                    </button>
+            
+                                    <div className="w-full md:w-1/2 aspect-square bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden">
+                                        <img 
+                                            src={selectedProduct.img} 
+                                            alt={selectedProduct.name} 
+                                            className="max-h-full max-w-full object-contain mix-blend-multiply"
+                                        />
+                                    </div>
+            
+                                    <div className="w-full md:w-1/2 flex text-left flex-col justify-between py-2">
+                                        <div> 
+                                            <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProduct.name}</h2>
+                                            
+            
+                                            <p className="text-2xl font-black text-[#56b35a] mb-2">${selectedProduct.price.toFixed(2)}</p>
+                                            <p className="text-gray-600 text-sm leading-relaxed mb-2">{selectedProduct.description}</p>
+                                        </div>
+                                            <div className="flex items-center justify-between gap-1 ">
+                                                <span className="text-sm text-gray-400 mr-30">(Reviews)</span>
+                                                {[...Array(selectedProduct.rating)].map((_, idx) => (
+                                                    <Star key={idx} size={18} className="fill-[#f2c050] text-[#f2c050]" />
+                                                ))}
+                                            </div>
+            
+                                        {/* Controls Wrapper */}
+                                        <div className="space-y-3 mt-4">
+                                            <div className="space-y-3 border-t border-b border-gray-100 py-3">
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-gray-700 font-bold text-sm">Quantity:</span>
+                                                    <div className="flex items-center border border-gray-200 rounded-md bg-white">
+                                                        <button 
+                                                            onClick={decreaseQty}
+                                                            className="p-2 text-gray-500 hover:text-red-500 transition-colors"
+                                                        >
+                                                            <Minus size={16} />
+                                                        </button>
+                                                        <span className="w-12 text-center font-bold text-gray-800">{quantity}</span>
+                                                        <button 
+                                                            onClick={increaseQty}
+                                                            className="p-2 text-gray-500 hover:text-[#56b35a] transition-colors"
+                                                        >
+                                                            <Plus size={16} />
+                                                        </button>
+                                                    </div>
+                                                </div>
+            
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-gray-700 font-bold text-sm">Total Price:</span>
+                                                    <span className="text-2xl font-black text-[#56b35a]">
+                                                        ${(selectedProduct.price * quantity).toFixed(2)}
+                                                    </span>
+                                                </div>
+                                            </div>
+            
+                                            <div className="flex flex-col sm:flex-row gap-6">
+                                                <button 
+                                                    onClick={() => alert(`Added ${quantity} ${selectedProduct.name} to cart!`)}
+                                                    className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-gray-50 py-2 px-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all"
+                                                >
+                                                    <ShoppingCart size={50} />
+                                                    Add To Cart
+                                                </button>
+            
+                                                <button 
+                                                    onClick={() => alert(`Proceeding to checkout for ${quantity} ${selectedProduct.name}!`)}
+                                                    className="flex-1 bg-[#56b35a] hover:bg-[#4aa04e] text-xl text-white py-2 px-4 rounded-lg font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+                                                >
+                                                    Buy Now
+                                                </button>
+                                            </div>
+                                        </div>
+            
+                                    </div>
+                                </div>
+                            </div>
+                        )}
         </section>
     );
 }

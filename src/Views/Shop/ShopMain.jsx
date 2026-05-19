@@ -4,7 +4,7 @@ import ShopHome from "./ShopHome";
 import ShopPage2 from "./ShopPage2";
 
 export default function ShopMain() {
-    // State to manage which page is visible (Default is page 1)
+    // manage which page is visible 
     const [activePage, setActivePage] = useState(1);
 
     return (
