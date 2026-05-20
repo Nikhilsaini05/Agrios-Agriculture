@@ -1,6 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import HomeMain from './Views/home/homeMain'
+import HomeMain from './Views/home/home_main'
 import AboutMain from './Views/About/aboutMain'
 import ServicesMain from './Views/service/servicesMain'
 import ProjectMain from './Views/Project/projectMain'
