@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import { UserData } from "../Controllers/authController"
 import { Route } from "lucide-react";
-import Settings from "../Views/Admin/Settings/settings";
+import Settings from "../Views/Admin/Settings/Settings";
 
 export const RouteServices = {
     home : "/",
