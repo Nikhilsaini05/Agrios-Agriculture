@@ -1,16 +1,16 @@
 import Footer from "../../Components/Common/footer";
 import Navbar from "../../Components/Common/navbar";
-import HeroSection from "./HeroSection";
-import AboutFarmSection from "./AboutFarmSection";
-import ProductsSection from "./ProductSection";
-import DistributorSection from "./DistributorSection";
-import TetsimonialSection from "./TetsimonialSection";
-import HealthyLifeSection from "./HealthyLifeSection";
-import ProjectsSection from "./ProjectsSection";
+import HeroSection from "./heroSection";
+import AboutFarmSection from "./aboutFarmSection";
+import ProductsSection from "./productSection";
+import DistributorSection from "./distributorSection";
+import TetsimonialSection from "./tetsimonialSection";
+import HealthyLifeSection from "./healthyLifeSection";
+import ProjectsSection from "./projectsSection";
 import FooterEnd from "../../Components/Common/footerEnd";
-import BlogSection from "./BlogSection";
+import BlogSection from "./blogSection";
 import JsPractice from "./jspractice";
-import ShowFavrateCard from "./First";
+import ShowFavrateCard from "./first";
 
 
 export default function HomeMain() {

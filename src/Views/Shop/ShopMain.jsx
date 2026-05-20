@@ -1,5 +1,5 @@
 import PageName from "../../Components/Common/pageName";
-import ShopHome from "./ShopHome";
+import ShopHome from "./shopHome";
 
 
 export default function ShopMain(){

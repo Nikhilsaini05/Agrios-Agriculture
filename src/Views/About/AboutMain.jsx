@@ -1,8 +1,8 @@
 import PageName from "../../Components/Common/pageName";
 import AboutHeroSection from "./aboutHeroSection";
-import AboutStorySection from "./AboutStorySection";
-import AboutTestimonialsSection from "./AboutTestimonialsSection";
-import AboutVideoSection from "./AboutVedioSection";
+import AboutStorySection from "./aboutStorySection";
+import AboutTestimonialsSection from "./aboutTestimonialsSection";
+import AboutVideoSection from "./aboutVedioSection";
 
 export default function AboutMain(){
     return(<>

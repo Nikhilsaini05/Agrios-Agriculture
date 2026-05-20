@@ -1,5 +1,5 @@
 import PageName from "../../Components/Common/pageName";
-import ProjectHeroSection from "./ProjectHero";
+import ProjectHeroSection from "./projectHero";
 
 export default function ProjectMain(){
     return(<>

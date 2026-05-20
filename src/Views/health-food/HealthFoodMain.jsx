@@ -1,6 +1,6 @@
 import PageName from '../../Components/Common/pageName'
-import HealthFoodHome from './HealthFoodHome'
-import SimilarProjects from './Similar Projects'
+import HealthFoodHome from './healthFoodHome'
+import SimilarProjects from './similar Projects'
 export default function HealthFoodMain() {
     return (
         <>
