@@ -1,4 +1,4 @@
-import LoginPage from "./loginPage";
+import LoginPage from "./login_page";
 
 export default function AdminMain(){
     return(<>
