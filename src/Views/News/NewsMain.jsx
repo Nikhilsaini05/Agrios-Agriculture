@@ -1,4 +1,4 @@
-import PageName from '../../Components/Common/PageName'
+import PageName from '../../Components/Common/pageName'
 import NewsHome from './NewsHome'
 
 export default function NewsMain() {

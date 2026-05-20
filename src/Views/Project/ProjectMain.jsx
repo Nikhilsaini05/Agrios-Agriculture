@@ -1,4 +1,4 @@
-import PageName from "../../Components/Common/PageName";
+import PageName from "../../Components/Common/pageName";
 import ProjectHeroSection from "./ProjectHero";
 
 export default function ProjectMain(){

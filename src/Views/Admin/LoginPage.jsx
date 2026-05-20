@@ -2,7 +2,7 @@ import LoginPageBGImage from "/Images/adminImages/LoginPage.jpg"
 
 import { useState } from "react";
 import { supabase } from "../../Backend/supabase_client";
-import { UserData } from "../../Controllers/AuthController";
+import { UserData } from "../../Controllers/authController";
 import { User } from "lucide-react";
 import { useNavigate } from "react-router";
 import { RouteServices } from "../../Services/routes_services";

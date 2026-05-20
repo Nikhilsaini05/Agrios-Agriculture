@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
-import Footer from "../Components/Common/Footer";
-import Navbar from "../Components/Common/Navbar";
-import FooterEnd from "../Components/Common/FooterEnd";
+import Footer from "../Components/Common/footer";
+import Navbar from "../Components/Common/navbar";
+import FooterEnd from "../Components/Common/footerEnd";
 
 export default function PublicLayout  () {
     return <>

@@ -1,4 +1,4 @@
-import PageName from '../../Components/Common/PageName'
+import PageName from '../../Components/Common/pageName'
 import HealthFoodHome from './HealthFoodHome'
 import SimilarProjects from './Similar Projects'
 export default function HealthFoodMain() {

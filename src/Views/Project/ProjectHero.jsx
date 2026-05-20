@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useAppData } from "../../Controllers/DataController/ProjectCardData";
+import { useAppData } from "../../Controllers/DataController/projectCardData";
 import { RouteServices } from "../../Services/routes_services";
 
 export default function ProjectHeroSection() {

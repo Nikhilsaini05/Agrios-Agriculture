@@ -1,6 +1,6 @@
 import { IndianRupee } from "lucide-react"
-import Admin_navbar from "./Admin_navbar"
-import Sidebar from "./Sidebar"
+import Admin_navbar from "./admin_navbar"
+import Sidebar from "./sidebar"
 
 import { LayoutDashboard, Image, Settings2, MapPin, Key, Share2, Contact } from 'lucide-react';
 

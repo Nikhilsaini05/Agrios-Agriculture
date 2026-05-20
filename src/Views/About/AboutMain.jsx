@@ -1,5 +1,5 @@
-import PageName from "../../Components/Common/PageName";
-import AboutHeroSection from "./AboutHeroSection";
+import PageName from "../../Components/Common/pageName";
+import AboutHeroSection from "./aboutHeroSection";
 import AboutStorySection from "./AboutStorySection";
 import AboutTestimonialsSection from "./AboutTestimonialsSection";
 import AboutVideoSection from "./AboutVedioSection";

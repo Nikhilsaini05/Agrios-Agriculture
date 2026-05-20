@@ -1,4 +1,4 @@
-import PageName from "../../Components/Common/PageName";
+import PageName from "../../Components/Common/pageName";
 import ServicesCTA from "./ServicesCTA";
 import ServicesHeroService from "./ServicesHeroSection";
 import ServicesListSection from "./ServicesListSection";
