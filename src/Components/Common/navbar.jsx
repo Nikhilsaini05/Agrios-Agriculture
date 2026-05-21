@@ -19,7 +19,7 @@ function Navbar() {
         const fetchNavbarData = async () => {
             try {
                 const { data, error } = await supabase
-                    .from('NavBarData') 
+                    .from('config_table') 
                     .select('*');
 
                 if (error) throw error;

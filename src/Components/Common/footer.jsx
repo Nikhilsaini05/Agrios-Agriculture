@@ -10,7 +10,7 @@ export default function Footer() {
         try {
             // Remove the extra quotes, just use the plain string
             const { data, error } = await supabase
-                .from('FooterData') 
+                .from('config_table') 
                 .select('*');
 
             if (error) throw error;
