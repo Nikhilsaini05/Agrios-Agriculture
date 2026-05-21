@@ -1,6 +1,9 @@
-import React from 'react'
+import { UserData } from '../../Controllers/authController';
+import {LogOut} from 'lucide-react';
 
 export default function Admin_navbar() {
+    const {logoutUser} = UserData();
+
     return (<>
 <section className='w-full h-20 bg-[#F7F2EC] px-8 flex items-center border-b border-[#F2E4D8] border-l-[3px] border-l-[#5F0D24]'>            <main className='w-full flex justify-between items-center top-0 '>
                 
@@ -14,7 +17,7 @@ export default function Admin_navbar() {
                 </div>
 
                 {/* Right Side: Profile Info */}
-                <div className='flex items-center gap-4'>
+                <div className='flex items-center gap-4 '>
                     <div className='text-right'>
                         <h1 className='text-[16px] font-bold text-black leading-tight'>Admin Panel</h1>
                         <p className='text-[12px] font-semibold text-[#5F0D24]'>SUPER ADMIN</p>
@@ -28,6 +31,14 @@ export default function Admin_navbar() {
                             className='w-full h-full object-cover'
                         />
                     </div>
+
+                   {/* Logout Button */}
+                        <button
+                            onClick={logoutUser}
+                            className=' bg-[#5F0D24] text-white px-2 py-3 cursor-pointer rounded-lg hover:bg-[#7D1230] transition-all'
+                        >
+                            <LogOut size={22} />
+                        </button>
                 </div>
 
             </main>
