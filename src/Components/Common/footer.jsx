@@ -114,7 +114,7 @@ const formatDate = (dateString) => {
                         <div className="flex flex-row gap-4">
                             <img src="Images/call.png" alt="call" className="h-4 w-4" />
                             <p className="flex items-center gap-3">
-                                <span>{loading ? "Loading..." : footerData?.Number}</span>
+                                <span>{loading ? "Loading..." : footerData?.Phone_number}</span>
                             </p>
                         </div>
 
@@ -122,7 +122,7 @@ const formatDate = (dateString) => {
                         <div className="flex flex-row gap-4 ">
                             <img src="/Images/email.png" alt="email" className="h-4 w-4 pt-1" />
                             <p className="flex items-center gap-3">
-                                <span>{loading ? "Loading..." : footerData?.Email}</span>
+                                <span>{loading ? "Loading..." : footerData?.email}</span>
                             </p>
                         </div>
 

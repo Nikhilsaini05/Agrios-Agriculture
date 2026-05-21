@@ -18,7 +18,7 @@ export default function ProductsSection() {
                 }
             },
             {
-                breakpoint: 430,
+                breakpoint: 320,
                 settings: {
                     slidesToShow: 1,
                 }

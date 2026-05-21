@@ -60,7 +60,7 @@ function Navbar() {
                             <div className="flex flex-col md:text-[16px]">
                                 <h3 className="text-[#878680] text-[12px] uppercase tracking-wide">Call anytime</h3>
                                 <span className="font-bold text-[14px]">
-                                    {loading ? "..." : navbarData?.call}
+                                    {loading ? "..." : navbarData?.Phone_number}
                                 </span>
                             </div>
 
