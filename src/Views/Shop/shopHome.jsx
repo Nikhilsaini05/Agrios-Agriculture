@@ -12,15 +12,15 @@ export default function ShopHome() {
     const [currentPage, setCurrentPage] = useState(0);
     const pageLimit = 9;
 
-    const gotoNextPage = async ()=> {
-        
+    const gotoNextPage = async () => {
+
         await fetchProducts();
-        setCurrentPage(currentPage+1);
+        setCurrentPage(currentPage + 1);
     }
-    const gotoPreviousPage = async ()=> {
-        
+    const gotoPreviousPage = async () => {
+
         await fetchProducts();
-        setCurrentPage(currentPage-1);
+        setCurrentPage(currentPage - 1);
     }
 
     const fetchProducts = async () => {
@@ -29,10 +29,10 @@ export default function ShopHome() {
             const { data, error } = await supabase
                 .from('ProductTable')
                 .select('*, Servies(*) ')
-                .range((currentPage*pageLimit),(currentPage*pageLimit)+pageLimit).limit(9);
+                .range((currentPage * pageLimit), (currentPage * pageLimit) + pageLimit).limit(9);
 
-                console.log(data);
-                
+            console.log(data);
+
 
             if (error) throw error;
             setProducts(data);
@@ -104,8 +104,6 @@ export default function ShopHome() {
                 <section className="w-full md:w-3/4">
                     <div className="flex justify-between items-center mb-8">
                         <p className="text-gray-500 text-sm">Showing 1–9 of 10 results</p>
-                        <button onClick={()=> gotoPreviousPage()} className='bg-[#56b35a] text-white px-4 py-1 rounded text-sm font-semibold'>Previous Page</button>
-                        <button onClick={()=> gotoNextPage()} className='bg-[#56b35a] text-white px-4 py-1 rounded text-sm font-semibold'>Next Page</button>
                         <select className="border border-gray-200 rounded-md p-2 text-sm text-gray-500 outline-none">
                             <option>Default sorting</option>
                             <option>Price: Low to High</option>
@@ -125,7 +123,7 @@ export default function ShopHome() {
                                     onClick={() => openProductDetails(item)}
                                 >
                                     <div className="rounded-xl overflow-hidden aspect-square flex items-center justify-center mb-4 bg-gray-50">
-                                        
+
                                         <img
                                             src={item.Product_Image || item.img || "/Images/Apple.jpg"}
                                             alt={item.Product_Name}
@@ -143,6 +141,12 @@ export default function ShopHome() {
                             ))}
                         </div>
                     )}
+                    {/* Pagination */}
+                    <div className='mt-6 flex justify-center gap-55'>
+                        <button onClick={() => gotoPreviousPage()} className='bg-[#56b35a] text-white px-4 py-1 rounded text-sm font-semibold'>Prev. Page</button>
+                        <button onClick={() => gotoNextPage()} className='bg-[#56b35a] text-white px-4 py-1 rounded text-sm font-semibold'>Next Page</button>
+                    </div>
+
                 </section>
 
             </main>
