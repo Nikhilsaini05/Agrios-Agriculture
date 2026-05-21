@@ -10,7 +10,7 @@ export default function ShopHome() {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [currentPage, setCurrentPage] = useState(0);
-    const pageLimit = 2;
+    const pageLimit = 9;
 
     const gotoNextPage = async ()=> {
         
@@ -29,7 +29,7 @@ export default function ShopHome() {
             const { data, error } = await supabase
                 .from('ProductTable')
                 .select('*, Servies(*) ')
-                .range((currentPage*pageLimit),(currentPage*pageLimit)+pageLimit).limit(2);
+                .range((currentPage*pageLimit),(currentPage*pageLimit)+pageLimit).limit(9);
 
                 console.log(data);
                 
