@@ -125,7 +125,7 @@ export default function ShopHome() {
                                     onClick={() => openProductDetails(item)}
                                 >
                                     <div className="rounded-xl overflow-hidden aspect-square flex items-center justify-center mb-4 bg-gray-50">
-                                        {/* NOTE: Verify your image column property name here (e.g. item.Product_Image) */}
+                                        
                                         <img
                                             src={item.Product_Image || item.img || "/Images/Apple.jpg"}
                                             alt={item.Product_Name}
@@ -134,8 +134,8 @@ export default function ShopHome() {
                                     </div>
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <h4 className="font-bold text-gray-800 text-[22px] px-4">{item.Product_Name}</h4>
-                                            <p className="text-[#56b35a] font-bold mt-1 ">${(item.Selling_Prise ?? 0).toFixed(2)}</p>
+                                            <h4 className="font-bold text-gray-800 text-left text-[24px] px-4">{item.Product_Name}</h4>
+                                            <p className="text-[#56b35a] text-left text-[22px] font-bold mt-1 px-4 ">${(item.Selling_Prise ?? 0).toFixed(2)}</p>
                                         </div>
                                         <Star size={24} className="fill-[#f2c050] text-[#f2c050] mr-4" />
                                     </div>
