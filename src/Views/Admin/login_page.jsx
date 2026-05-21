@@ -29,6 +29,8 @@ export default function LoginPage() {
             alert(error.message);
             saveUserProfile(null);
         } else {
+            localStorage.setItem("token", data.session.access_token)
+            localStorage.setItem("user", JSON.stringify(data.user))
             setUserSession(data.session.access_token);
             saveUserProfile(data.user);
             navigate(RouteServices.adminDashboard);
