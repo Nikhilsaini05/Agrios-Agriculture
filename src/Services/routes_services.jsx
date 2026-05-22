@@ -18,7 +18,8 @@ export const RouteServices = {
     adminServies: "adminServices",
     adminShop: "adminShop",
     order: "order",
-    adminContact: "adminContact"
+    adminContact: "adminContact",
+    cartItem: "cartItem",
 }
 
 

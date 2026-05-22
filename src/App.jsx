@@ -19,6 +19,7 @@ import Add_products from './Views/Admin/Services/add_products'
 import AddShopProducts from './Views/Admin/Shop/addShopProducts'
 import AdminContact from './Views/Admin/Contacts/adminContact'
 import Order from './Views/Admin/Order/order'
+import CartMain from './Views/Cart/cartMain'
 
 
 
@@ -43,6 +44,7 @@ function App() {
           <Route path={RouteServices.news} element={<NewsMain />}></Route>
           <Route path={RouteServices.shop} element={<ShopMain />}></Route>
           <Route path={RouteServices.contact} element={<ContactMain />}></Route>
+          <Route path={RouteServices.cartItem} element={<CartMain/>}></Route>
 
         {/* Admin Routes */}
         </Route>

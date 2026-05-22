@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Search, ChevronRight, Star, X, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { RouteServices } from '../../Services/routes_services';
 import { supabase } from '../../Backend/supabase_client';
+import { useCart } from '../../Controllers/DataController/cartContext';
+
 
 export default function ShopHome() {
 
@@ -11,6 +13,7 @@ export default function ShopHome() {
     const [quantity, setQuantity] = useState(1);
     const [currentPage, setCurrentPage] = useState(0);
     const pageLimit = 9;
+    const { addToCart } = useCart();
 
     const gotoNextPage = async () => {
 
@@ -242,8 +245,11 @@ export default function ShopHome() {
                                 <div className="flex flex-row md:flex-col gap-2 md:gap-2.5">
                                     <button
                                         type="button"
-                                        onClick={() => alert(`Added ${quantity} ${selectedProduct.Product_Name} to cart!`)}
-                                        className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                                        onClick={() => {
+                                            addToCart(quantity);
+                                            closePopup();
+                                        }}
+                                        className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2"
                                     >
                                         <ShoppingCart size={16} />
                                         Add To Cart
@@ -251,7 +257,11 @@ export default function ShopHome() {
 
                                     <button
                                         type="button"
-                                        onClick={() => alert(`Proceeding to checkout for ${quantity} ${selectedProduct.Product_Name}!`)}
+                                        onClick={() => {
+                                            alert(`Proceeding to checkout for ${quantity} ${selectedProduct.Product_Name}!`)
+                                        }
+
+                                        }
                                         className="flex-1 bg-[#56b35a] hover:bg-[#4aa04e] text-white py-1.5 md:py-2.5 px-2 md:px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-sm hover:shadow transition-all active:scale-[0.98]"
                                     >
                                         Buy Now

@@ -4,28 +4,31 @@ import insta from '/Images/instagram-icon.png';
 import pics from '/Images/pics-icon.png';
 import twitter from '/Images/twitter-icon.png';
 import nav from '/Images/navbar-2.png';
-import { Menu, Search, ChevronDown } from 'lucide-react';
+import { Menu, Search, ChevronDown, ShoppingCart, ShoppingCartIcon, SearchIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { RouteServices } from '../../Services/routes_services';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../Backend/supabase_client';
+import { useCart } from '../../Controllers/DataController/cartContext';
 
 function Navbar() {
     const navigate = useNavigate();
     const [navbarData, setNavbarData] = useState(null);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
+
+    const {cartCounter} = useCart();
 
     useEffect(() => {
         const fetchNavbarData = async () => {
             try {
                 const { data, error } = await supabase
-                    .from('config_table') 
+                    .from('config_table')
                     .select('*');
 
                 if (error) throw error;
 
                 if (data && data.length > 0) {
-                console.log("NavBar Data Received:", data[0]);
+                    console.log("NavBar Data Received:", data[0]);
                     setNavbarData(data[0]);
                 }
             } catch (error) {
@@ -40,7 +43,7 @@ function Navbar() {
 
     return (
         <>
-            <section className="w-screen fixed top-0 z-[1000]">
+            <section className="w-screen fixed top-0 z-1000">
                 <nav className="w-full flex flex-col md:flex-row items-center justify-center bg-[#FCFCFC] py-4 gap-38 px-8 lg:gap-50 ">
                     <div className="shrink-0">
                         <img src={logo} alt="Logo" className="h-auto w-auto" />
@@ -103,8 +106,15 @@ function Navbar() {
                         </div>
                         <div className='flex pl-20 gap-6 lg:gap-8 '>
                             <span className='text-[#878680] pt-1.5'>|</span>
-                            <img src="Images/search.png" alt="search" className='pt-2 cursor-pointer' />
-                            <img src="Images/shop.png" alt="shop" className='pt-2 cursor-pointer' />
+                            <span alt="search" className='pt-2 cursor-pointer'>
+                                <SearchIcon size={26} />
+                            </span>
+                            <span onClick={() => navigate(RouteServices.cartItem)}
+                                alt="shop" className='pt-2 cursor-pointer'>
+                                <ShoppingCartIcon size={26} />
+                                <span
+                                    className=" absolute top-0.5 right-27 flex items-center justify-center w-5 h-5 rounded-full bg-[#adad97] text-white text-[10px] font-bold">{cartCounter}</span>
+                            </span>
                         </div>
                     </div>
                 </div>
