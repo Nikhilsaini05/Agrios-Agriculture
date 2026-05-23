@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowLeft, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 
 export default function CartItems() {
-    // Demo items matching the design layout
     const items = [
         {
             id: 1,

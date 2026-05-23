@@ -1,21 +1,22 @@
 import { Children, createContext, useContext, useState } from "react";
 
-const cartContext = createContext();
+const CartContext = createContext();
 
-export const CartProvider = ({ Children }) => {
+export const CartProvider = ({ children }) => {
     const [cartCount, setCartCount] = useState(0);
 
+    // Inside cartContext.jsx
     const addToCart = (qlt = 1) => {
-        setCartCount((perv) => perv + qlt);
+        console.log("Context state changing! Adding:", qlt);
+        setCartCount((prev) => prev + qlt);
     };
 
     return (
-        <cartContext.Provider value={{ cartCount, addToCart }}>
-            {Children}
-        </cartContext.Provider>
-
+        <CartContext.Provider value={{ cartCount, addToCart }}>
+            {children}
+        </CartContext.Provider>
     )
 }
 
-export const useCart = () => useContext(cartContext);
+export const useCart = () => useContext(CartContext);
 

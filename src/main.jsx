@@ -18,9 +18,9 @@ createRoot(document.getElementById('root')).render(
           <CategoryDataProvider>
             <CartProvider>
 
-            <App />
-            
+              <App />
             </CartProvider>
+            
           </CategoryDataProvider>
         </UserLoginData>
 

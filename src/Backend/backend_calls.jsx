@@ -8,7 +8,7 @@ export default function SupaData() {
     useEffect(() => {
         const fetchSupa = async () => {
             const { data, error } = await supabase
-                .from('FooterData')
+                .from('config_table')
                 .select('*'); 
 
             if (error) {

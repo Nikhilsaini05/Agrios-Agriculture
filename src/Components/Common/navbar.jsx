@@ -16,7 +16,7 @@ function Navbar() {
     const [navbarData, setNavbarData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const {cartCounter} = useCart();
+    const {cartCount} = useCart();
 
     useEffect(() => {
         const fetchNavbarData = async () => {
@@ -43,7 +43,7 @@ function Navbar() {
 
     return (
         <>
-            <section className="w-screen fixed top-0 z-1000">
+            <section className="w-screen fixed top-0 z-[1000]">
                 <nav className="w-full flex flex-col md:flex-row items-center justify-center bg-[#FCFCFC] py-4 gap-38 px-8 lg:gap-50 ">
                     <div className="shrink-0">
                         <img src={logo} alt="Logo" className="h-auto w-auto" />
@@ -113,7 +113,8 @@ function Navbar() {
                                 alt="shop" className='pt-2 cursor-pointer'>
                                 <ShoppingCartIcon size={26} />
                                 <span
-                                    className=" absolute top-0.5 right-27 flex items-center justify-center w-5 h-5 rounded-full bg-[#adad97] text-white text-[10px] font-bold">{cartCounter}</span>
+                                    className=" absolute top-0.5 right-27 flex items-center justify-center w-5 h-5 rounded-full bg-[#adad97] text-white text-[10px] font-bold">
+                                        {cartCount}</span>
                             </span>
                         </div>
                     </div>
