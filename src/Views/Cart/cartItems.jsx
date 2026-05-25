@@ -143,7 +143,7 @@ export default function CartItems() {
                                     <label className="text-xs text-indigo-200 block mb-1 font-medium">Expiration date</label>
                                     <input
                                         type="text"
-                                        placeholder="mm/yy"
+                                        placeholder="dd/mm/yy"
                                         className="w-full bg-indigo-700/40 border border-indigo-500/30 rounded-xl px-4 py-2.5 text-sm placeholder-indigo-300 focus:outline-none focus:border-indigo-300 transition"
                                     />
                                 </div>
@@ -151,7 +151,7 @@ export default function CartItems() {
                                     <label className="text-xs text-indigo-200 block mb-1 font-medium">CVV</label>
                                     <input
                                         type="password"
-                                        maxLength="3"
+                                        maxLength="8"
                                         placeholder="123"
                                         className="w-full bg-indigo-700/40 border border-indigo-500/30 rounded-xl px-4 py-2.5 text-sm placeholder-indigo-300 focus:outline-none focus:border-indigo-300 transition"
                                     />

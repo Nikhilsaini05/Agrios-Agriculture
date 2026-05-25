@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, ChevronRight, Star, X, Plus, Minus, ShoppingCart } from 'lucide-react';
+import { Search, ChevronRight, Star, X, Plus, Minus, ShoppingCart, Backpack } from 'lucide-react';
 import { RouteServices } from '../../Services/routes_services';
 import { supabase } from '../../Backend/supabase_client';
 import { useCart } from '../../Controllers/DataController/cartContext';
@@ -245,15 +245,38 @@ export default function ShopHome() {
                                 <div className="flex flex-row md:flex-col gap-2 md:gap-2.5">
                                     <button
                                         type="button"
-                                        onClick={() => {
-                                            addToCart(quantity);
-                                            closePopup();
-                                        }}
-                                        className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2"
-                                    >
-                                        <ShoppingCart size={16} />
-                                        Add To Cart
-                                    </button>
+                                        onClick={async () => {
+                                    try {
+
+                                        const totalCalculatedPrice = ((selectedProduct.Selling_Prise ?? 0) * quantity).toFixed(2);
+                                        const productImage = selectedProduct.productImage || Backpack.jpg ;
+
+                                        const { error } = await supabase
+                                            .from('carts')
+                                            .insert([
+                                                {
+                                                    Image: productImage,
+                                                    Item_Name: selectedProduct.Product_Name,
+                                                    Total_Prise: `$${totalCalculatedPrice}`, 
+                                                    Quantity: quantity.toString()            
+                                                }
+                                            ])
+                                            .select();
+
+                                        if (error) throw error;
+
+                                        addToCart(quantity);
+                                        closePopup();
+                                    } catch (err) {
+                                        console.error("Error adding item to cart database table:", err.message);
+                                        alert("Failed to sync item to database cart: " + err.message);
+                                    }
+                                }}
+                                className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2"
+                            >
+                                <ShoppingCart size={16} />
+                                Add To Cart
+                            </button>
 
                                     <button
                                         type="button"
