@@ -5,11 +5,6 @@ import { supabase } from '../../Backend/supabase_client';
 
 const CartContext = createContext();
 
-// const hsnData = {
-//     fivePercent: "642536",
-//     eighteenPercent: "896542"
-// };
-
 export const CartProvider = ({ children }) => {
     const [cartitems, setCartItems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
@@ -48,7 +43,7 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    // 1. FIXED INCREASE QUANTITY (Prevents string concatenation like "1" + 1 = "11")
+    // 1. FIXED INCREASE QUANTITY 
 const increaseQty = (id) => {
     setCartItems(prev => prev.map(item => {
         if (item.id === id) {

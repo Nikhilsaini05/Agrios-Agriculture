@@ -80,7 +80,7 @@ export default function CartItems() {
                                     </div>
 
                                     {/* Price */}
-                                    <span className="font-bold text-gray-800 w-16 text-right">${item.Total_Prise * item.Quantity}</span>
+                                    <span className="font-bold text-gray-800 w-16 text-right">{item.Total_Prise}</span>
 
                                     {/* Delete Button */}
                                     <button 
