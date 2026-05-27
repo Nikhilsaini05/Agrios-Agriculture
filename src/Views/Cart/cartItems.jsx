@@ -1,33 +1,50 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
+import { supabase } from '../../Backend/supabase_client';
 
 export default function CartItems() {
-    const items = [
-        {
-            id: 1,
-            image: "../../../public/Images/Apples.jpg",
-            itemName: "Apple",
-            price: "$100",
-            type: "Fruit    ",
-            quantity: 2
-        },
-        {
-            id: 2,
-            image: "../../../public/Images/Apples.jpg",
-            itemName: "Apple",
-            price: "$100",
-            type: "Fruit    ",
-            quantity: 2
-        },
-        {
-            id: 3,
-            image: "../../../public/Images/Apples.jpg",
-            itemName: "Apple",
-            price: "$100",
-            type: "Fruit    ",
-            quantity: 2
-        },
-    ];
+    
+    const [items , setItems] = useState([]);
+    const [loading , setLoading] = useState(true);
+
+    // fetch data from cart table 
+    const fetchCartitems =  async () =>{
+        try{
+            setLoading(true);
+            const {data , error} = await supabase
+                .from('carts')
+                .select('*')
+
+                if(error) throw error;
+                setItems(data || [])
+        } catch(error){
+            console.error("error  in fatch items", error.message);
+        } finally{
+            setLoading(false);
+        }
+    }
+
+    useEffect(()=>{
+        fetchCartitems()
+    })
+
+    //  REMOVE ITEM
+    const deleteCartItem = async (id) => {
+        try {
+            const { error } = await supabase
+                .from('carts')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+            setItems(prev => prev.filter(item => item.id !== id));
+        } catch (error) {
+            console.error("Deletion target error:", error.message);
+        }
+    };
+
+
 
     return (
         <div className="min-h-screen bg-[#edecea] flex items-center justify-center mt-30 p-4 sm:p-10">
@@ -38,7 +55,7 @@ export default function CartItems() {
                 <div className="lg:col-span-2 p-6 sm:p-10">
                     {/* Go Back Link */}
                     <div className="flex items-center gap-2 text-gray-700 cursor-pointer hover:text-gray-900 transition mb-8 w-fit">
-                        <ArrowLeft size={20} className="stroke-[3]" />
+                        <ArrowLeft size={20} className="stroke-3" />
                         <span className="font-semibold text-lg">Shopping Continue</span>
                     </div>
 
@@ -51,7 +68,7 @@ export default function CartItems() {
                     </div>
 
                     {/* Items Map */}
-                    <div className="space-y-4 max-h-[450px] overflow-y-auto pr-2">
+                    <div className="space-y-4 max-h-112.5 overflow-y-auto pr-2">
                         {items.map((item) => (
                             <div
                                 key={item.id}
@@ -60,29 +77,31 @@ export default function CartItems() {
                                 {/* Image and Details Group */}
                                 <div className="flex items-center gap-4">
                                     <img
-                                        src={item.image}
+                                        src={item.Image}
                                         alt={item.itemName}
                                         className="w-16 h-16 rounded-xl object-cover bg-gray-100"
                                     />
                                     <div>
-                                        <h3 className="font-bold text-gray-800 text-base">{item.itemName}</h3>
-                                        <p className="text-xs text-gray-400 mt-0.5">{item.type}</p>
+                                        <h3 className="font-bold text-gray-800 text-base">{item.Item_Name}</h3>
+                                        <p className="text-xs text-gray-400 mt-0.5">Fresh Grocery</p>
                                     </div>
                                 </div>
 
                                 {/* Quantity and Actions Group */}
-                                <div className="flex items-center gap-8">
-                                    {/* Quantity Controller */}
-                                    <div className="flex items-center gap-2">
-                                        <span className="font-semibold text-gray-800 text-lg w-4 text-center">{item.quantity}</span>
-                                        <div className="flex flex-col text-gray-400">
-                                            <button className="hover:text-gray-700"><ChevronUp size={16} /></button>
-                                            <button className="hover:text-gray-700"><ChevronDown size={16} /></button>
-                                        </div>
-                                    </div>
+                                <div className="flex items-center gap-2">
+                                                <span className="font-semibold text-gray-800 text-lg w-4 text-center">{0}</span>
+                                                <div className="flex flex-col text-gray-400">
+                                                    <button onClick={()=>{}} className="hover:text-gray-700">
+                                                        <ChevronUp size={16} />
+                                                    </button>
+                                                    <button onClick={() => {}} className="hover:text-gray-700">
+                                                        <ChevronDown size={16} />
+                                                    </button>
+                                                </div>
+                                            
 
                                     {/* Price */}
-                                    <span className="font-bold text-gray-800 w-16 text-right">{item.price}</span>
+                                    <span className="font-bold text-gray-800 w-16 text-right">{item.Total_Prise}</span>
 
                                     {/* Delete Button */}
                                     <button className="text-gray-400 hover:text-red-500 transition">

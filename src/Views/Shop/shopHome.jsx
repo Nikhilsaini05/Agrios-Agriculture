@@ -246,37 +246,43 @@ export default function ShopHome() {
                                     <button
                                         type="button"
                                         onClick={async () => {
-                                    try {
+                                            try {
+                                                // 1. Calculate the values safely from active product selection
+                                                const totalCalculatedPrice = ((selectedProduct.Selling_Prise ?? 0) * quantity).toFixed(2);
 
-                                        const totalCalculatedPrice = ((selectedProduct.Selling_Prise ?? 0) * quantity).toFixed(2);
-                                        const productImage = selectedProduct.productImage || Backpack.jpg ;
+                                                // 2. Fetch image straight from table record url saved by your admin form
+                                                const fallbackImage = selectedProduct.Product_Image || selectedProduct.Image || selectedProduct.img || "/Images/Apple.jpg";
 
-                                        const { error } = await supabase
-                                            .from('carts')
-                                            .insert([
-                                                {
-                                                    Image: productImage,
-                                                    Item_Name: selectedProduct.Product_Name,
-                                                    Total_Prise: `$${totalCalculatedPrice}`, 
-                                                    Quantity: quantity.toString()            
-                                                }
-                                            ])
-                                            .select();
+                                                // 3. Directly Insert into your Supabase "carts" table
+                                                const { error: dbError } = await supabase
+                                                    .from('carts')
+                                                    .insert([
+                                                        {
+                                                            Image: fallbackImage,
+                                                            Item_Name: selectedProduct.Product_Name,
+                                                            Total_Prise: `$${totalCalculatedPrice}`,
+                                                            Quantity: quantity.toString()
+                                                        }
+                                                    ])
+                                                    .select();
 
-                                        if (error) throw error;
+                                                if (dbError) throw dbError;
 
-                                        addToCart(quantity);
-                                        closePopup();
-                                    } catch (err) {
-                                        console.error("Error adding item to cart database table:", err.message);
-                                        alert("Failed to sync item to database cart: " + err.message);
-                                    }
-                                }}
-                                className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2"
-                            >
-                                <ShoppingCart size={16} />
-                                Add To Cart
-                            </button>
+                                                // 4. Update the local context and close modal safely
+                                                addToCart(quantity);
+                                                closePopup();
+                                                alert(`${selectedProduct.Product_Name} successfully added to your cart!`);
+
+                                            } catch (err) {
+                                                console.error("Error updating cart entry inside database:", err.message);
+                                                alert("Failed to synchronize item to database cart: " + err.message);
+                                            }
+                                        }}
+                                        className="flex-1 border-2 border-[#56b35a] text-[#56b35a] hover:bg-green-50/50 py-2.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2"
+                                    >
+                                        <ShoppingCart size={16} />
+                                        Add To Cart
+                                    </button>
 
                                     <button
                                         type="button"
