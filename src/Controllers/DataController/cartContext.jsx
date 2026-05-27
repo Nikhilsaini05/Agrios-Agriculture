@@ -1,41 +1,39 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
-import { Children, createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from '../../Backend/supabase_client';
 
 const CartContext = createContext();
 
-
-const hsnData = {
-    fivePercent : "642536",
-    eighteenPercent: "896542"
-}
+// const hsnData = {
+//     fivePercent: "642536",
+//     eighteenPercent: "896542"
+// };
 
 export const CartProvider = ({ children }) => {
     const [cartitems, setCartItems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
 
-    // Inside cartContext.jsx
     const addToCart = (qlt = 1) => {
         console.log("Context state changing! Adding:", qlt);
         setCartCount((prev) => prev + qlt);
     };
 
-
+    // FETCH CART ITEMS FROM SUPABASE
     const fetchCartitems = async () => {
         try {
             const { data, error } = await supabase
                 .from('carts')
-                .select('*')
+                .select('*');
 
             if (error) throw error;
-            setCartItems(data || [])
+            setCartItems(data || []);
         } catch (error) {
-            console.error("error  in fatch items", error.message);
+            console.error("error in fetch items", error.message);
         }
-    }
+    };
 
-    //  REMOVE ITEM
+    // REMOVE ITEM
     const deleteCartItem = async (id) => {
         try {
             const { error } = await supabase
@@ -50,83 +48,89 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-
-    const increaseQty = (index) => {
-        cartitems[index].Quantity++;
-    }
-
-
-    const getCartTotalAmount = () => {
-
-        let total = 0;
-
-        for (let i = 0; i < cartitems.length; i++) {
-            const e = cartitems[i];
-
-            const itemTotalPrice = e.Quantity * e.Total_Prise;
-
-            total = total + itemTotalPrice;
-
+    // 1. FIXED INCREASE QUANTITY (Prevents string concatenation like "1" + 1 = "11")
+const increaseQty = (id) => {
+    setCartItems(prev => prev.map(item => {
+        if (item.id === id) {
+            const currentQty = parseInt(item.Quantity, 10) || 0;
+            return { ...item, Quantity: currentQty + 1 };
         }
+        return item;
+    }));
+};
 
-        return total;
-    }
+// 2. FIXED DECREASE QUANTITY
+const decreaseQty = (id) => {
+    setCartItems(prev => prev.map(item => {
+        if (item.id === id) {
+            const currentQty = parseInt(item.Quantity, 10) || 0;
+            return { ...item, Quantity: currentQty > 1 ? currentQty - 1 : 1 };
+        }
+        return item;
+    }));
+};
 
-
-        /// Hsn : 605684 (5%)
-        /// hsn : 798465 (18%)
-
-
-    const calculateTaxes = () => {
-
-       let totalTax = 0;
-
-       for (let i = 0; i < cartitems.length; i++) {
+// 3. FIXED TOTAL AMOUNT 
+const getCartTotalAmount = () => {
+    let total = 0;
+    for (let i = 0; i < cartitems.length; i++) {
         const e = cartitems[i];
-
-        let tax = 0; 
-
-        if(e.hsn === hsnData.fivePercent){
-           tax = (e.Quantity * e.Total_Prise) * 5 /100;
-        }
         
-        if(e.hsn === hsnData.eighteenPercent){
-            tax = (e.Quantity * e.Total_Prise) * 18 /100;
-        }
+        const price = parseFloat(e.Total_Prise || e.Total_Price || 0);
+        const qty = parseInt(e.Quantity, 10) || 0;
 
-        totalTax += tax;
-        
-       }
-
+        total += qty * price;
     }
+    return total;
+};
 
+    // // CALCULATE TAXES 
+    // const calculateTaxes = () => {
+    //     let totalTax = 0;
+    //     for (let i = 0; i < cartitems.length; i++) {
+    //         const e = cartitems[i];
+    //         let tax = 0;
 
-    
+    //         if (e.hsn === hsnData.fivePercent) {
+    //             tax = (e.Quantity * e.Total_Prise) * 5 / 100;
+    //         }
+    //         if (e.hsn === hsnData.eighteenPercent) {
+    //             tax = (e.Quantity * e.Total_Prise) * 18 / 100;
+    //         }
+    //         totalTax += tax;
+    //     }
+    //     return totalTax;
+    // };
 
-    const calculateDeliveryCharges = ()=> {
-
-        const heghestCharge = 120;
-
+    // CALCULATE SHIPPING/DELIVERY
+    const calculateDeliveryCharges = () => {
+        const highestCharge = 120;
         let totalDeliveryCharges = 0;
 
         for (let i = 0; i < cartitems.length; i++) {
             const e = cartitems[i];
-
-            totalDeliveryCharges += e.deliveryCharges;
-            
+            totalDeliveryCharges += e.deliveryCharges || 0; 
         }
 
-        return totalDeliveryCharges > heghestCharge ? heghestCharge : totalDeliveryCharges;
-
-    }
-
+        return totalDeliveryCharges > highestCharge ? highestCharge : totalDeliveryCharges;
+    };
 
     return (
-        <CartContext.Provider value={{ cartCount, addToCart }}>
+        <CartContext.Provider value={{ 
+            cartitems, 
+            cartCount, 
+            addToCart, 
+            fetchCartitems, 
+            deleteCartItem, 
+            increaseQty, 
+            decreaseQty,
+            getCartTotalAmount, 
+            // calculateTaxes, 
+            calculateDeliveryCharges 
+        }}>
             {children}
         </CartContext.Provider>
-    )
-}
+    );
+};
 
 export const useCart = () => useContext(CartContext);
-

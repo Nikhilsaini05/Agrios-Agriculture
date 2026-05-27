@@ -1,50 +1,28 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import React, { useEffect } from 'react';
 import { ArrowLeft, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
-import { supabase } from '../../Backend/supabase_client';
+import { useCart } from '../../Controllers/DataController/cartContext';
 
 export default function CartItems() {
     
-    const [items , setItems] = useState([]);
-    const [loading , setLoading] = useState(true);
+    const {
+        cartitems,
+        fetchCartitems,
+        deleteCartItem,
+        increaseQty,
+        decreaseQty,
+        getCartTotalAmount,
+        calculateDeliveryCharges
+    } = useCart();
 
-    // fetch data from cart table 
-    const fetchCartitems =  async () =>{
-        try{
-            setLoading(true);
-            const {data , error} = await supabase
-                .from('carts')
-                .select('*')
+    useEffect(() => {
+        fetchCartitems();
+    }, []);
 
-                if(error) throw error;
-                setItems(data || [])
-        } catch(error){
-            console.error("error  in fatch items", error.message);
-        } finally{
-            setLoading(false);
-        }
-    }
-
-    useEffect(()=>{
-        fetchCartitems()
-    })
-
-    //  REMOVE ITEM
-    const deleteCartItem = async (id) => {
-        try {
-            const { error } = await supabase
-                .from('carts')
-                .delete()
-                .eq('id', id);
-
-            if (error) throw error;
-            setItems(prev => prev.filter(item => item.id !== id));
-        } catch (error) {
-            console.error("Deletion target error:", error.message);
-        }
-    };
-
-
+    const subTotal = getCartTotalAmount();
+    const shipping = calculateDeliveryCharges();
+    const overallTotal = subTotal + shipping;
 
     return (
         <div className="min-h-screen bg-[#edecea] flex items-center justify-center mt-30 p-4 sm:p-10">
@@ -64,12 +42,12 @@ export default function CartItems() {
                     {/* Header Info */}
                     <div className="mb-6">
                         <h1 className="text-2xl font-bold text-gray-800">Shopping cart</h1>
-                        <p className="text-sm text-gray-500 mt-1">You have {items.length} items in your cart</p>
+                        <p className="text-sm text-gray-500 mt-1">You have {cartitems.length} items in your cart</p>
                     </div>
 
                     {/* Items Map */}
                     <div className="space-y-4 max-h-112.5 overflow-y-auto pr-2">
-                        {items.map((item) => (
+                        {cartitems.map((item) => (
                             <div
                                 key={item.id}
                                 className="flex items-center justify-between border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition"
@@ -78,7 +56,7 @@ export default function CartItems() {
                                 <div className="flex items-center gap-4">
                                     <img
                                         src={item.Image}
-                                        alt={item.itemName}
+                                        alt={item.Item_Name}
                                         className="w-16 h-16 rounded-xl object-cover bg-gray-100"
                                     />
                                     <div>
@@ -88,23 +66,27 @@ export default function CartItems() {
                                 </div>
 
                                 {/* Quantity and Actions Group */}
-                                <div className="flex items-center gap-2">
-                                                <span className="font-semibold text-gray-800 text-lg w-4 text-center">{0}</span>
-                                                <div className="flex flex-col text-gray-400">
-                                                    <button onClick={()=>{}} className="hover:text-gray-700">
-                                                        <ChevronUp size={16} />
-                                                    </button>
-                                                    <button onClick={() => {}} className="hover:text-gray-700">
-                                                        <ChevronDown size={16} />
-                                                    </button>
-                                                </div>
-                                            
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-semibold text-gray-800 text-lg w-6 text-center">{item.Quantity}</span>
+                                        <div className="flex flex-col text-gray-400">
+                                            <button onClick={() => increaseQty(item.id)} className="hover:text-gray-700">
+                                                <ChevronUp size={16} />
+                                            </button>
+                                            <button onClick={() => decreaseQty(item.id)} className="hover:text-gray-700">
+                                                <ChevronDown size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
 
                                     {/* Price */}
-                                    <span className="font-bold text-gray-800 w-16 text-right">{item.Total_Prise}</span>
+                                    <span className="font-bold text-gray-800 w-16 text-right">${item.Total_Prise * item.Quantity}</span>
 
                                     {/* Delete Button */}
-                                    <button className="text-gray-400 hover:text-red-500 transition">
+                                    <button 
+                                        onClick={() => deleteCartItem(item.id)}
+                                        className="text-gray-400 hover:text-red-500 transition"
+                                    >
                                         <Trash2 size={18} />
                                     </button>
                                 </div>
@@ -138,7 +120,7 @@ export default function CartItems() {
                         </div>
 
                         {/* Inputs Form */}
-                        <form className="space-y-4">
+                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                             <div>
                                 <label className="text-xs text-indigo-200 block mb-1 font-medium">Name on card</label>
                                 <input
@@ -183,20 +165,20 @@ export default function CartItems() {
                     <div className="mt-8 pt-6 border-t border-indigo-500/30 space-y-2">
                         <div className="flex justify-between text-sm text-indigo-200">
                             <span>Subtotal</span>
-                            <span>$1,668</span>
+                            <span>${subTotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm text-indigo-200">
                             <span>Shipping</span>
-                            <span>$4</span>
+                            <span>${shipping.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-base font-bold text-white pt-2">
                             <span>Total (Tax incl.)</span>
-                            <span>$1,672</span>
+                            <span>${overallTotal.toFixed(2)}</span>
                         </div>
 
                         {/* Checkout CTA */}
                         <button className="w-full bg-[#10b981] hover:bg-[#059669] text-white rounded-xl py-3 px-4 mt-4 font-bold flex justify-between items-center transition shadow-lg shadow-emerald-900/20">
-                            <span>$1,672</span>
+                            <span>${overallTotal.toFixed(2)}</span>
                             <span className="flex items-center gap-1">
                                 Checkout <span>→</span>
                             </span>

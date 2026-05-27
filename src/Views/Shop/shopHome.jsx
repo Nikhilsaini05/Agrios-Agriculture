@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Search, ChevronRight, Star, X, Plus, Minus, ShoppingCart, Backpack } from 'lucide-react';
 import { RouteServices } from '../../Services/routes_services';
