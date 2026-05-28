@@ -248,20 +248,19 @@ export default function ShopHome() {
                                         type="button"
                                         onClick={async () => {
                                             try {
-                                                // 1. Calculate the values safely from active product selection
-                                                const totalCalculatedPrice = ((selectedProduct.Selling_Prise ?? 0) * quantity).toFixed(2);
+                                                const numericPrice = (selectedProduct.Selling_Prise ?? 0) * quantity;
 
-                                                // 2. Fetch image straight from table record url saved by your admin form
-                                                const fallbackImage = selectedProduct.Product_Image || selectedProduct.Image || selectedProduct.img || "/Images/Apple.jpg";
+                                                const totalInCents = Math.round(numericPrice * 1);
 
-                                                // 3. Directly Insert into your Supabase "carts" table
+                                                const fallbackImage = selectedProduct.Product_Image || selectedProduct.Image | selectedProduct.img || "/Images/Apple.jpg";
+
                                                 const { error: dbError } = await supabase
                                                     .from('carts')
                                                     .insert([
                                                         {
                                                             Image: fallbackImage,
                                                             Item_Name: selectedProduct.Product_Name,
-                                                            Total_Prise: `$${totalCalculatedPrice}`,
+                                                            Total_Prise: totalInCents,
                                                             Quantity: quantity.toString()
                                                         }
                                                     ])
@@ -269,7 +268,6 @@ export default function ShopHome() {
 
                                                 if (dbError) throw dbError;
 
-                                                // 4. Update the local context and close modal safely
                                                 addToCart(quantity);
                                                 closePopup();
                                                 alert(`${selectedProduct.Product_Name} successfully added to your cart!`);

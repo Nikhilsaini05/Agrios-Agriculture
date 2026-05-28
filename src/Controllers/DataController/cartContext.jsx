@@ -98,17 +98,17 @@ const getCartTotalAmount = () => {
     // };
 
     // CALCULATE SHIPPING/DELIVERY
-    const calculateDeliveryCharges = () => {
-        const highestCharge = 120;
-        let totalDeliveryCharges = 0;
+    // const calculateDeliveryCharges = () => {
+    //     const highestCharge = 120;
+    //     let totalDeliveryCharges = 0;
 
-        for (let i = 0; i < cartitems.length; i++) {
-            const e = cartitems[i];
-            totalDeliveryCharges += e.deliveryCharges || 0; 
-        }
+    //     for (let i = 0; i < cartitems.length; i++) {
+    //         const e = cartitems[i];
+    //         totalDeliveryCharges += e.deliveryCharges || 0; 
+    //     }
 
-        return totalDeliveryCharges > highestCharge ? highestCharge : totalDeliveryCharges;
-    };
+    //     return totalDeliveryCharges > highestCharge ? highestCharge : totalDeliveryCharges;
+    // };
 
     return (
         <CartContext.Provider value={{ 
@@ -121,7 +121,7 @@ const getCartTotalAmount = () => {
             decreaseQty,
             getCartTotalAmount, 
             // calculateTaxes, 
-            calculateDeliveryCharges 
+            // calculateDeliveryCharges 
         }}>
             {children}
         </CartContext.Provider>

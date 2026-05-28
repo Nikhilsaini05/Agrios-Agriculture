@@ -5,7 +5,7 @@ import { ArrowLeft, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { useCart } from '../../Controllers/DataController/cartContext';
 
 export default function CartItems() {
-    
+
     const {
         cartitems,
         fetchCartitems,
@@ -13,7 +13,7 @@ export default function CartItems() {
         increaseQty,
         decreaseQty,
         getCartTotalAmount,
-        calculateDeliveryCharges
+        // calculateDeliveryCharges
     } = useCart();
 
     useEffect(() => {
@@ -21,8 +21,8 @@ export default function CartItems() {
     }, []);
 
     const subTotal = getCartTotalAmount();
-    const shipping = calculateDeliveryCharges();
-    const overallTotal = subTotal + shipping;
+    // const shipping = calculateDeliveryCharges();
+    // const overallTotal = subTotal + shipping;
 
     return (
         <div className="min-h-screen bg-[#edecea] flex items-center justify-center mt-30 p-4 sm:p-10">
@@ -80,10 +80,10 @@ export default function CartItems() {
                                     </div>
 
                                     {/* Price */}
-                                    <span className="font-bold text-gray-800 w-16 text-right">{item.Total_Prise}</span>
+                                    <span className="font-bold text-gray-800 w-16 text-right">${item.Total_Prise * item.Quantity}</span>
 
                                     {/* Delete Button */}
-                                    <button 
+                                    <button
                                         onClick={() => deleteCartItem(item.id)}
                                         className="text-gray-400 hover:text-red-500 transition"
                                     >
@@ -143,7 +143,7 @@ export default function CartItems() {
                                 <div>
                                     <label className="text-xs text-indigo-200 block mb-1 font-medium">Expiration date</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="dd/mm/yy"
                                         className="w-full bg-indigo-700/40 border border-indigo-500/30 rounded-xl px-4 py-2.5 text-sm placeholder-indigo-300 focus:outline-none focus:border-indigo-300 transition"
                                     />
@@ -151,7 +151,7 @@ export default function CartItems() {
                                 <div>
                                     <label className="text-xs text-indigo-200 block mb-1 font-medium">CVV</label>
                                     <input
-                                        type="password"
+                                        type="number"
                                         maxLength="8"
                                         placeholder="123"
                                         className="w-full bg-indigo-700/40 border border-indigo-500/30 rounded-xl px-4 py-2.5 text-sm placeholder-indigo-300 focus:outline-none focus:border-indigo-300 transition"
@@ -169,19 +169,25 @@ export default function CartItems() {
                         </div>
                         <div className="flex justify-between text-sm text-indigo-200">
                             <span>Shipping</span>
-                            <span>${shipping.toFixed(2)}</span>
+                            <span>$60</span>
                         </div>
-                        <div className="flex justify-between text-base font-bold text-white pt-2">
+                        {/* <div className="flex justify-between text-base font-bold text-white pt-2">
                             <span>Total (Tax incl.)</span>
                             <span>${overallTotal.toFixed(2)}</span>
-                        </div>
+                        </div> */}
 
                         {/* Checkout CTA */}
-                        <button className="w-full bg-[#10b981] hover:bg-[#059669] text-white rounded-xl py-3 px-4 mt-4 font-bold flex justify-between items-center transition shadow-lg shadow-emerald-900/20">
-                            <span>${overallTotal.toFixed(2)}</span>
-                            <span className="flex items-center gap-1">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                alert(`Processing Your Order Payment of $${(subTotal + 60).toFixed(2)}`);
+                            }}
+                            className="w-full bg-[#10b981] hover:bg-[#059669] text-white rounded-xl py-3 px-4 mt-4 font-bold flex justify-between items-center transition shadow-lg shadow-emerald-900/20"
+                        >
+                            <span>${(subTotal + 60).toFixed(2)}</span>
+                            <div className="flex items-center gap-1">
                                 Checkout <span>→</span>
-                            </span>
+                            </div>
                         </button>
                     </div>
                 </div>
